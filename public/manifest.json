@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "인사평가 시스템",
+  "name": "디에이치케이솔루션 인사평가 시스템",
   "icons": [
     {
       "src": "favicon.ico",
