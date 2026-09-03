@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Avatar } from "../main/Table/TargetTableRow";
 
 export default function GradeGroupTable({
   evalYear,
@@ -54,10 +55,23 @@ export default function GradeGroupTable({
               >
                 <Td>
                   <UserInfo>
-                    <div className="name">
-                      {user.name} <span className="pos">{user.title}</span>
+                    <div style={{ marginRight: "30px" }}>
+                      <Avatar>
+                        {user.UrlPath && (
+                          <img
+                            src={`http://192.168.2.245/download/image/${user.UrlPath}`}
+                            alt="User_Image"
+                            width={"100%"}
+                          ></img>
+                        )}
+                      </Avatar>
                     </div>
-                    <div className="dept">{user.dept}</div>
+                    <div>
+                      <div className="name">
+                        {user.name} <span className="pos">{user.title}</span>
+                      </div>
+                      <div className="dept">{user.dept}</div>
+                    </div>
                   </UserInfo>
                 </Td>
                 <Td align="center">
@@ -192,6 +206,8 @@ const Td = styled.td`
   }
 `;
 const UserInfo = styled.div`
+  display: flex;
+  align-items: center;
   .name {
     font-size: 1.05rem;
     font-weight: 800;

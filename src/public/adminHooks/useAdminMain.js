@@ -46,6 +46,7 @@ export const useAdminMain = () => {
           comment_2nd: null,
           final_grade_1st: null,
           final_grade_2nd: null,
+          UrlPath: row.UrlPath,
         });
       }
 
@@ -125,7 +126,7 @@ export const useAdminMain = () => {
   const handleNavigate = useCallback(
     (path, targetId, isDisabled) => {
       if (isDisabled) {
-        alert("대상자가 아직 실적을 제출하지 않아 평가할 수 없습니다.");
+        alert("대상자가 아직 성과 실적을 제출하지 않아 평가할 수 없습니다.");
         return;
       }
       Navigation(`/Admin/${path}/${Login_Info?.selectedAdminYear}/${targetId}`);
@@ -208,7 +209,7 @@ export const useAdminMain = () => {
       }
       if (myComment)
         return {
-          text: "내 평가 완료",
+          text: "평가 완료",
           color: "blue",
           btnText: "확인",
           disabled: false,

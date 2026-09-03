@@ -134,7 +134,7 @@ export default function PerformanceMainPage() {
                     onClick={actions.handleSubmit}
                     $isValid={state.isAllEvaluated}
                   >
-                    내 권한({roleLabel}) 평가 제출
+                    {roleLabel} 평가 제출
                   </FinalSubmitButton>
                 </ActionArea>
               )}

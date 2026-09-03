@@ -18,7 +18,15 @@ export default function TargetTableRow({ target, calculators, onNavigate }) {
       {/* 1. 대상자 정보 */}
       <Td>
         <UserInfo>
-          <Avatar>{target.name.charAt(0)}</Avatar>
+          <Avatar>
+            {target.UrlPath && (
+              <img
+                src={`http://192.168.2.245/download/image/${target.UrlPath}`}
+                alt="User_Image"
+                width={"100%"}
+              ></img>
+            )}
+          </Avatar>
           <div className="info">
             <div className="name">
               {target.name} <span className="pos">{target.position}</span>
@@ -224,7 +232,7 @@ const UserInfo = styled.div`
   }
 `;
 
-const Avatar = styled.div`
+export const Avatar = styled.div`
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -235,6 +243,9 @@ const Avatar = styled.div`
   justify-content: center;
   font-size: 1.2rem;
   font-weight: 800;
+  img {
+    border-radius: 10px 10px 10px 10px;
+  }
 `;
 
 const EvalCell = styled.div`

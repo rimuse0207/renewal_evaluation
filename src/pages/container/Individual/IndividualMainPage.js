@@ -1,8 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import SidebarPage from "../nav/SidebarPage";
 
 import { usePersonalApply } from "../../../public/personalHooks/usePersonalApply";
+
+const AutoResizeTextarea = ({ value, onChange, placeholder }) => {
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+
+      if (document.activeElement === textareaRef.current) {
+        textareaRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }
+    }
+  }, [value]);
+
+  return (
+    <Textarea
+      ref={textareaRef}
+      value={value || ""}
+      onChange={onChange}
+      placeholder={placeholder}
+      rows={1}
+    />
+  );
+};
 
 export default function PerformanceEditPage() {
   const {
@@ -19,13 +47,37 @@ export default function PerformanceEditPage() {
     handleFinalSubmit,
   } = usePersonalApply();
 
+  const mainContentRef = useRef(null);
+  const prevTaskCount = useRef(tasks.length);
+
+  // 🌟 항목 추가 시 전체 바닥이 아닌 '새로 추가된 박스'로 이동하는 로직
+  useEffect(() => {
+    if (tasks.length > prevTaskCount.current) {
+      const lastTask = tasks[tasks.length - 1]; // 새로 추가된 마지막 항목
+      if (lastTask) {
+        setTimeout(() => {
+          const newCardElement = document.getElementById(
+            `task-card-${lastTask.task_id}`,
+          );
+          if (newCardElement) {
+            newCardElement.scrollIntoView({
+              behavior: "smooth",
+              block: "center", // 🌟 박스를 화면 중앙에 위치시킴 ("start"로 하면 화면 최상단에 붙음)
+            });
+          }
+        }, 100);
+      }
+    }
+    prevTaskCount.current = tasks.length;
+  }, [tasks]);
+
   return (
     <LayoutContainer>
       {/* 좌측 고정 사이드바 */}
       <SidebarPage />
 
       {/* 우측 메인 콘텐츠 영역 */}
-      <MainContent>
+      <MainContent ref={mainContentRef}>
         <ContentWrapper>
           <PageHeader>
             <HeaderTop>
@@ -59,7 +111,7 @@ export default function PerformanceEditPage() {
 
           <FormSection>
             {tasks.map((item, index) => (
-              <TaskCard key={item.task_id}>
+              <TaskCard key={item.task_id} id={`task-card-${item.task_id}`}>
                 <CardHeader>
                   <CardTitle>
                     <Badge>{index + 1}</Badge> 실적 항목
@@ -151,7 +203,7 @@ export default function PerformanceEditPage() {
                       <Label>추진 업무</Label>
                       <Input
                         type="text"
-                        placeholder="수행한 업무의 명확한 제목을 입력하세요."
+                        placeholder="추진 업무를 작성해주세요."
                         value={item.task_name}
                         onChange={(e) =>
                           handleChange(
@@ -167,8 +219,8 @@ export default function PerformanceEditPage() {
                   <FullRow>
                     <FormGroup>
                       <Label>추진 실적 및 성과</Label>
-                      <Textarea
-                        placeholder="본인이 기여한 바와 구체적인 성과(수치화된 데이터 포함 권장)를 상세히 작성해주세요."
+                      <AutoResizeTextarea
+                        placeholder="추진 실적 및 성과를 자세하게 작성해주세요."
                         value={item.task_result}
                         onChange={(e) =>
                           handleChange(
@@ -210,7 +262,9 @@ export default function PerformanceEditPage() {
   );
 }
 
-// --- Styled Components (메인 페이지 디자인 시스템과 동기화) ---
+// ==========================================
+// 💅 Styled Components
+// ==========================================
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -218,27 +272,22 @@ const LayoutContainer = styled.div`
   overflow: hidden;
   background-color: #f4f6f8;
 `;
-
 const MainContent = styled.main`
   flex: 1;
   overflow-y: auto;
   position: relative;
   scroll-behavior: smooth;
 `;
-
 const ContentWrapper = styled.div`
   margin: 0 auto;
-  padding: 20px 24px 100px 24px;
+  padding: 20px 24px 300px 24px;
 `;
-
 const PageHeader = styled.div`
   margin-bottom: 32px;
 `;
-
 const HeaderTop = styled.div`
   margin-bottom: 16px;
 `;
-
 const BackButton = styled.button`
   display: inline-flex;
   align-items: center;
@@ -251,16 +300,13 @@ const BackButton = styled.button`
   cursor: pointer;
   padding: 0;
   transition: color 0.2s;
-
   .icon {
     font-size: 1.1rem;
   }
-
   &:hover {
     color: #0ea5e9;
   }
 `;
-
 const PageTitle = styled.h1`
   font-size: 1.75rem;
   font-weight: 800;
@@ -268,7 +314,6 @@ const PageTitle = styled.h1`
   letter-spacing: -0.5px;
   margin-bottom: 8px;
 `;
-
 const PageDesc = styled.p`
   font-size: 0.95rem;
   color: #64748b;
@@ -276,16 +321,13 @@ const PageDesc = styled.p`
     color: #ef4444;
   }
 `;
-
-// 스크롤 시 화면 상단에 달라붙는 서머리 바
 const SummaryStickyBar = styled.div`
   position: sticky;
-  top: 0; /* MainContent 기준 최상단 */
+  top: 0;
   z-index: 50;
   padding-bottom: 24px;
-  background-color: #f4f6f8; /* 배경색과 일치시켜 자연스럽게 덮음 */
+  background-color: #f4f6f8;
 `;
-
 const SummaryCard = styled.div`
   display: flex;
   justify-content: space-between;
@@ -298,12 +340,10 @@ const SummaryCard = styled.div`
   border-left: 6px solid ${(props) => (props.$isValid ? "#10b981" : "#ef4444")};
   transition: border-left-color 0.3s ease;
 `;
-
 const SummaryInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 24px;
-
   .label {
     font-size: 1rem;
     font-weight: 600;
@@ -322,7 +362,6 @@ const SummaryInfo = styled.div`
     }
   }
 `;
-
 const SummaryStatus = styled.div`
   font-size: 1.05rem;
   font-weight: 700;
@@ -331,21 +370,18 @@ const SummaryStatus = styled.div`
   padding: 8px 16px;
   border-radius: 8px;
 `;
-
 const FormSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
 `;
-
 const TaskCard = styled.div`
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
   border: 1px solid #e2e8f0;
-  overflow: hidden; /* 헤더 둥근 모서리 적용을 위해 */
+  overflow: hidden;
 `;
-
 const CardHeader = styled.div`
   display: flex;
   justify-content: space-between;
@@ -354,7 +390,6 @@ const CardHeader = styled.div`
   background-color: #f8fafc;
   border-bottom: 1px solid #e2e8f0;
 `;
-
 const CardTitle = styled.h3`
   display: flex;
   align-items: center;
@@ -363,7 +398,6 @@ const CardTitle = styled.h3`
   font-weight: 700;
   color: #1e293b;
 `;
-
 const Badge = styled.span`
   background-color: #0ea5e9;
   color: white;
@@ -375,7 +409,6 @@ const Badge = styled.span`
   border-radius: 6px;
   font-size: 0.9rem;
 `;
-
 const DeleteButton = styled.button`
   background: transparent;
   color: #ef4444;
@@ -386,47 +419,39 @@ const DeleteButton = styled.button`
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
-
   &:hover {
     background-color: #fef2f2;
     border-color: #ef4444;
   }
 `;
-
 const CardBody = styled.div`
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 20px;
 `;
-
 const GridRow = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 `;
-
 const FullRow = styled.div`
   width: 100%;
 `;
-
 const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
 `;
-
 const Label = styled.label`
   font-size: 0.9rem;
   font-weight: 700;
   color: #475569;
 `;
-
 const InputWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-
   .suffix {
     position: absolute;
     right: 16px;
@@ -435,7 +460,6 @@ const InputWrapper = styled.div`
     pointer-events: none;
   }
 `;
-
 const Input = styled.input`
   width: 100%;
   padding: 12px 16px;
@@ -447,17 +471,14 @@ const Input = styled.input`
   background-color: #ffffff;
   transition: all 0.2s;
   box-sizing: border-box;
-
   &:focus {
     border-color: #0ea5e9;
     box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
   }
-
   &[type="number"] {
-    padding-right: 40px; /* % 기호 공간 확보 */
+    padding-right: 40px;
   }
 `;
-
 const Select = styled.select`
   width: 100%;
   padding: 12px 16px;
@@ -470,13 +491,11 @@ const Select = styled.select`
   cursor: pointer;
   transition: all 0.2s;
   box-sizing: border-box;
-
   &:focus {
     border-color: #0ea5e9;
     box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
   }
 `;
-
 const Textarea = styled.textarea`
   width: 100%;
   padding: 16px;
@@ -486,28 +505,29 @@ const Textarea = styled.textarea`
   color: #1e293b;
   outline: none;
   min-height: 120px;
-  resize: vertical;
+  max-height: 350px;
+  resize: none;
   line-height: 1.6;
-  transition: all 0.2s;
   box-sizing: border-box;
+  overflow-y: auto;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 
   &:focus {
     border-color: #0ea5e9;
     box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
   }
 `;
-
 const FileInputWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
-  height: 44px; /* Input/Select 높이와 맞춤 */
+  height: 44px;
 `;
-
 const HiddenFileInput = styled.input`
   display: none;
 `;
-
 const FileInputLabel = styled.label`
   background-color: #f1f5f9;
   color: #475569;
@@ -521,12 +541,10 @@ const FileInputLabel = styled.label`
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s;
-
   &:hover {
     background-color: #e2e8f0;
   }
 `;
-
 const FileNameDisplay = styled.span`
   font-size: 0.9rem;
   color: #64748b;
@@ -535,7 +553,6 @@ const FileNameDisplay = styled.span`
   white-space: nowrap;
   flex: 1;
 `;
-
 const AddTaskButton = styled.button`
   display: flex;
   align-items: center;
@@ -551,18 +568,15 @@ const AddTaskButton = styled.button`
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
-
   .icon {
     font-size: 1.4rem;
     line-height: 1;
   }
-
   &:hover {
     background-color: #e0f2fe;
     border-color: #0ea5e9;
   }
 `;
-
 const ActionArea = styled.div`
   display: flex;
   gap: 16px;
@@ -571,7 +585,6 @@ const ActionArea = styled.div`
   padding-top: 24px;
   border-top: 1px solid #e2e8f0;
 `;
-
 const TempSaveButton = styled.button`
   padding: 14px 28px;
   background-color: #ffffff;
@@ -582,14 +595,12 @@ const TempSaveButton = styled.button`
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
-
   &:hover {
     background-color: #f8fafc;
     color: #1e293b;
     border-color: #94a3b8;
   }
 `;
-
 const FinalSubmitButton = styled.button`
   padding: 14px 36px;
   background-color: ${(props) => (props.$isValid ? "#0ea5e9" : "#cbd5e1")};
@@ -602,7 +613,6 @@ const FinalSubmitButton = styled.button`
   transition: all 0.2s;
   box-shadow: ${(props) =>
     props.$isValid ? "0 4px 12px rgba(14, 165, 233, 0.3)" : "none"};
-
   &:hover {
     background-color: ${(props) => (props.$isValid ? "#0284c7" : "#cbd5e1")};
   }

@@ -36,7 +36,7 @@ export default function AdminResultDashboardPage() {
     groupedData,
     chartData,
   } = useAdminResult();
-
+  console.log(groupedData, chartData);
   const groupOptions = Object.keys(DEPT_GROUPS);
 
   const totalEvaluated =
@@ -96,7 +96,12 @@ export default function AdminResultDashboardPage() {
             <>
               <ChartSection>
                 <ChartCard>
-                  <h3 className="chart-title">등급별 인원 수</h3>
+                  <h3 className="chart-title">
+                    등급별 인원 수 ({" "}
+                    {chartData.barData.reduce((a, b) => a + b.count, 0) +
+                      groupedData.None.length}{" "}
+                    명)
+                  </h3>
                   <div className="chart-wrapper">
                     <ResponsiveBar
                       data={chartData.barData}

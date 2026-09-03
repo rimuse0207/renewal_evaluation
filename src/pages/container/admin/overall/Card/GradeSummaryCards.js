@@ -19,7 +19,7 @@ export default function GradeSummaryCards({ scores, isBoth, getGrade }) {
         <GradeCard>
           <div className="title">
             {isBoth
-              ? "2차 평가 결과 (1차 겸직 동일 반영)"
+              ? "2차 평가 결과 (1차 통합 동일 반영)"
               : "2차 평가 결과 (성과 50% + 역량 50%)"}
           </div>
           <div className="score-area">
@@ -35,8 +35,8 @@ export default function GradeSummaryCards({ scores, isBoth, getGrade }) {
       <div className="bottom-row">
         <GradeCard $isFinal>
           <div className="title">
-            최종 종합 산출{" "}
-            {isBoth ? "(겸직 평가 100% 반영)" : "(1차 + 2차 평균 산출)"}
+            최종 종합 점수{" "}
+            {isBoth ? "(통합 평가 100% 반영)" : "(1차 + 2차 평균 점수)"}
           </div>
           <div className="score-area">
             <span className="score">{scores.finalTotal}</span>

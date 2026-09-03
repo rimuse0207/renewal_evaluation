@@ -28,4 +28,100 @@ export const MOCK_CRITERIA = [
   },
 ];
 
-export const YearList = [{ label: "2026", value: "2026" }];
+export const YearList = [
+  { label: "2026", value: "2026" },
+  { label: "2025", value: "2025" },
+  { label: "2024", value: "2024" },
+  { label: "2023", value: "2023" },
+  { label: "2022", value: "2022" },
+  { label: "2021", value: "2021" },
+];
+
+export const MOCK_ORG_BY_YEAR = {
+  2026: {
+    경영지원: ["경영지원1", "경영지원2", "재무팀", "인사총무팀", "IT팀"],
+    CE: [
+      "dicer",
+      "grinder",
+      "laser",
+      "A_dicer",
+      "A_grinder",
+      "A_laser",
+      "기술교육팀",
+      "안전팀",
+    ],
+    영업: [
+      "영업 1그룹",
+      "영업 2그룹",
+      "영업 3그룹",
+      "영업기술",
+      "부품소재",
+      "OEM",
+    ],
+  },
+  2025: {
+    경영지원: ["경영지원1", "경영지원2"],
+    CE: [
+      "dicer",
+      "grinder",
+      "laser",
+      "A_dicer",
+      "A_grinder",
+      "A_laser",
+      "CE 지원",
+    ],
+    영업: ["장비영업", "영업기술", "부품소재", "OEM"],
+  },
+  2024: {
+    경영지원: ["경영지원1", "경영지원2"],
+    CE: [
+      "dicer",
+      "grinder",
+      "laser",
+      "A_dicer",
+      "A_grinder",
+      "A_laser",
+      "CE 지원",
+    ],
+    영업: ["장비영업", "영업기술", "부품소재", "OEM"],
+  },
+  2023: {
+    경영지원: ["경영지원1", "경영지원2"],
+    CE: [
+      "dicer",
+      "grinder",
+      "laser",
+      "A_dicer",
+      "A_grinder",
+      "A_laser",
+      "아산CE총괄",
+    ],
+    영업: ["장비영업", "영업기술", "부품소재", "OEM"],
+  },
+  2022: {
+    경영지원: ["경영지원1", "경영지원2"],
+    CE: [
+      "dicer",
+      "grinder",
+      "laser",
+      "A_dicer",
+      "A_grinder",
+      "A_laser",
+      "아산CE총괄",
+    ],
+    영업: ["장비영업", "영업기술", "부품소재", "OEM"],
+  },
+  2021: {
+    경영지원: ["경영지원1", "경영지원2"],
+    CE: [
+      "dicer",
+      "grinder",
+      "laser",
+      "A_dicer",
+      "A_grinder",
+      "A_laser",
+      "아산CE총괄",
+    ],
+    영업: ["장비영업", "영업기술", "부품소재"],
+  },
+};

@@ -25,9 +25,14 @@ export default function OverallMainPage() {
     );
   }
 
-  const roleLabel = state.myRole === "1ST" ? "1차 평가자" : "2차 평가자";
+  const roleLabel =
+    state.myRole === "1ST"
+      ? "1차 평가자"
+      : state.myRole === "2ST"
+        ? "2차 평가자"
+        : "";
   const isDone = state.targetInfo.status === "DONE";
-
+  console.log("ADASDASDASD", state.targetInfo);
   return (
     <LayoutContainer>
       <SidebarPage />
@@ -69,7 +74,7 @@ export default function OverallMainPage() {
           />
 
           {/* 5. 최종 평가 등급 산출 UI */}
-          <SectionTitle>3. 최종 평가 등급 산출</SectionTitle>
+          <SectionTitle>3. 최종 평가 등급 점수</SectionTitle>
           <GradeSummaryCards
             scores={computed.scores}
             isBoth={state.isBoth}

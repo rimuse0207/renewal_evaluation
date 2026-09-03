@@ -6,6 +6,7 @@ import SidebarPage from "../../nav/SidebarPage";
 import { useAbilityEval } from "../../../../public/adminHooks/useAbilityEval";
 import { EvalHeader, EvalSummaryBar } from "../common/EvalSharedUI";
 import CompetencySection from "./Section/AblilitySection";
+import { Avatar } from "../main/Table/TargetTableRow";
 
 export default function CompetencyEvalPage() {
   const Navigation = useNavigate();
@@ -34,10 +35,9 @@ export default function CompetencyEvalPage() {
             title={`${roleLabel} 역량평가 작성`}
             desc={
               <>
-                피평가자의 역량평가 점수를 부여해주세요. 각 부문(능력,태도)별
-                합산 후 <strong>최종 100점 만점</strong>으로 자동 환산됩니다.
-                <br />타 평가자의 점수는 참고용으로 조회만 가능하며 수정할 수
-                없습니다.
+                각 부문(능력,태도)별 점수 합산 후{" "}
+                <strong>최종 100점 만점</strong>
+                으로 자동 환산됩니다.
               </>
             }
             onBack={() => Navigation(-1)}
@@ -47,7 +47,13 @@ export default function CompetencyEvalPage() {
           <ControlPanel>
             <TargetInfo>
               <Avatar>
-                {state.targetInfo.name ? state.targetInfo.name.charAt(0) : "이"}
+                {state.targetInfo.UrlPath && (
+                  <img
+                    src={`http://192.168.2.245/download/image/${state.targetInfo.UrlPath}`}
+                    alt="User_Image"
+                    width={"100%"}
+                  ></img>
+                )}
               </Avatar>
               <div>
                 <TargetName>
@@ -58,7 +64,7 @@ export default function CompetencyEvalPage() {
             </TargetInfo>
             {!isDone && (
               <BatchActionBox>
-                <span className="label"> {roleLabel} 빠른 일괄 부여:</span>
+                <span className="label"> {roleLabel} 일괄 점수 부여:</span>
                 <BatchSelect
                   value={state.batchScore}
                   onChange={(e) => actions.setBatchScore(e.target.value)}
@@ -124,7 +130,7 @@ export default function CompetencyEvalPage() {
                 onClick={actions.handleSubmit}
                 $isValid={computed.isAllEvaluated}
               >
-                내 권한({roleLabel}) 평가 제출
+                {roleLabel} 평가 제출
               </FinalSubmitButton>
             </ActionArea>
           )}
@@ -169,19 +175,6 @@ const TargetInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
-`;
-
-const Avatar = styled.div`
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #38bdf8, #0284c7);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
-  font-weight: 700;
 `;
 
 const TargetName = styled.div`

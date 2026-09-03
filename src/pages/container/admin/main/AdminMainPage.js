@@ -59,7 +59,8 @@ export default function ManagerDashboardPage() {
               <PageTitle>{state.selectedYear}년도 평가 대상자</PageTitle>
               <PageDesc>
                 <strong>'평가 필요'</strong>는 아직 평가를 하지 않은
-                대상자입니다.
+                대상자입니다.{"  "}
+                <strong>평가하기</strong> 버튼을 클릭하여 평가를 진행 해주세요.
               </PageDesc>
             </div>
             <YearSelect

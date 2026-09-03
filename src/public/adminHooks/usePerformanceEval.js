@@ -107,6 +107,7 @@ export const usePerformanceEval = (evalYear, userId) => {
         isBoth,
         scores: evalScores,
         totalScore: totalCalculatedScore,
+        evalYear,
       });
       if (response.status) alert("성과평가가 성공적으로 제출되었습니다.");
     } catch (error) {

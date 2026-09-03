@@ -96,11 +96,7 @@ export const useAbilityEval = (evalYear, userId) => {
   );
 
   const handleBatchApply = useCallback(() => {
-    if (
-      !window.confirm(
-        `나의 평가 항목에 ${batchScore}점을 일괄 부여하시겠습니까?`,
-      )
-    )
+    if (!window.confirm(`평가 항목에 ${batchScore}점을 일괄 부여하시겠습니까?`))
       return;
     const newScores = { ...myScores };
     competencyData.ability.forEach(
@@ -138,6 +134,7 @@ export const useAbilityEval = (evalYear, userId) => {
         abilScore: abilitySubtotal,
         attScore: attitudeSubtotal,
         comment: "",
+        evalYear,
       });
       if (response.status) alert("역량평가 점수가 성공적으로 제출되었습니다.");
       Navigation(-1);

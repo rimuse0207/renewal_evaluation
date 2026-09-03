@@ -134,7 +134,7 @@ export const useOverallEval = (evalYear, userId) => {
     if (!myComment.trim()) return alert("종합 의견을 작성해주세요.");
 
     const confirmMsg = isBoth
-      ? "1·2차 겸직 평가 대상자입니다. 종합 의견을 제출하시겠습니까?"
+      ? "1·2차 통합 평가 대상자입니다. 종합 의견을 제출하시겠습니까?"
       : `${myRole === "1ST" ? "1차" : "2차"} 평가 종합 의견을 제출하시겠습니까?`;
 
     if (!window.confirm(confirmMsg)) return;
@@ -147,11 +147,12 @@ export const useOverallEval = (evalYear, userId) => {
         comment1ST: comments.comment1ST,
         comment2ND: comments.comment2ND,
         finalGrade: getGrade(scores.finalTotal),
+        evalYear,
       });
 
       if (response.status) {
         alert("종합 의견이 성공적으로 제출되었습니다.");
-        Navigation("/Manager/Dashboard");
+        Navigation(-1);
       }
     } catch (error) {
       alert("제출 중 오류가 발생했습니다.");

@@ -38,6 +38,7 @@ export const useAdminResult = () => {
         const res = await Request_Get_Axios(`/Admin/getAdminAllResults`, {
           evalYear: selectedYear,
         });
+        console.log("ADASDASDSADD", res);
         if (res.status) {
           setRawData(res.data || []);
         }

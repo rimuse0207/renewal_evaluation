@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { usePersonalSelect } from "../../../public/personalHooks/usePersonalSelect";
 import { Change_User_Selected_Year } from "../../../Models/LoginInfoReducer/LoginInfoReduce";
 import Criteria from "./criteria/Criteria";
+import { Avatar } from "../admin/main/Table/TargetTableRow";
 
 export default function MainPage() {
   const dispatch = useDispatch();
@@ -38,8 +39,13 @@ export default function MainPage() {
             <UserInfoCard>
               <ProfileContainer>
                 <Avatar>
-                  {personalStatus?.fullName.charAt(0) ||
-                    Login_Info?.fullName.charAt(0)}
+                  {Login_Info.UrlPath && (
+                    <img
+                      src={`http://192.168.2.245/download/image/${Login_Info.UrlPath}`}
+                      alt="User_Image"
+                      width={"100%"}
+                    ></img>
+                  )}
                 </Avatar>
                 <ProfileDetails>
                   <ProfileName>
@@ -249,20 +255,6 @@ const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
-`;
-
-const Avatar = styled.div`
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #38bdf8, #0284c7);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  font-weight: 700;
-  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3);
 `;
 
 const ProfileDetails = styled.div`

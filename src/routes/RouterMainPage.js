@@ -10,6 +10,7 @@ import AdminMainPage from "../pages/container/admin/main/AdminMainPage";
 import PerformanceMainPage from "../pages/container/admin/performance/PerformanceMainPage";
 import OverallMainPage from "../pages/container/admin/overall/OverallMainPage";
 import AdminResultDashboardPage from "../pages/container/admin/HRTable/AdminResultDashboardPage";
+import PermissionGrantPage from "../pages/container/admin/user/PermissionGrantPage";
 
 const RouterMainPage = () => {
   const User_Info = useSelector(
@@ -56,6 +57,12 @@ const RouterMainPage = () => {
     {
       path: "/Admin/Overall/:evalYear/:userId",
       element: <OverallMainPage></OverallMainPage>,
+      withAuthorization: true,
+      withAdminAuthorization: false,
+    },
+    {
+      path: "/HR/User",
+      element: <PermissionGrantPage></PermissionGrantPage>,
       withAuthorization: true,
       withAdminAuthorization: false,
     },

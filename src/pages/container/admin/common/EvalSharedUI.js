@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Avatar } from "../main/Table/TargetTableRow";
 
 // 1. 공통 헤더
 export const EvalHeader = ({ title, desc, onBack }) => (
@@ -25,7 +26,15 @@ export const EvalTargetPanel = ({
 }) => (
   <ControlPanel>
     <TargetInfo>
-      <Avatar>{targetInfo.name ? targetInfo.name.charAt(0) : "이"}</Avatar>
+      <Avatar>
+        {targetInfo.UrlPath && (
+          <img
+            src={`http://192.168.2.245/download/image/${targetInfo.UrlPath}`}
+            alt="User_Image"
+            width={"100%"}
+          ></img>
+        )}
+      </Avatar>
       <div>
         <TargetName>
           {targetInfo.name} {targetInfo.title}
@@ -35,7 +44,7 @@ export const EvalTargetPanel = ({
     </TargetInfo>
     {showBatch && (
       <BatchActionBox>
-        <span className="label">{roleLabel} 빠른 일괄 부여:</span>
+        <span className="label">{roleLabel} 일괄 점수 부여:</span>
         <BatchSelect value={batchScore} onChange={onBatchChange}>
           <option value="" disabled>
             점수 선택
@@ -55,8 +64,8 @@ export const EvalTargetPanel = ({
 // 3. 공통 빈 화면 (제출 대기 중)
 export const EvalEmptyState = ({ targetInfo, onBack }) => (
   <EmptyStateWrapper>
-    <div className="empty-icon">⏳</div>
-    <h2 className="empty-title">대상자 실적 제출 대기 중</h2>
+    <div className="empty-icon"></div>
+    <h2 className="empty-title">대상자 추진 업무 및 실적 제출 대기 중</h2>
     <p className="empty-desc">
       대상자{" "}
       <strong>
@@ -84,7 +93,7 @@ export const EvalSummaryBar = ({
       <SummaryInfo>
         <div className="label">
           {roleLabel} 평가 환산 총점
-          {isBoth && <Badge>1·2차 겸직</Badge>}
+          {isBoth && <Badge>1·2차 통합</Badge>}
         </div>
         <div className="value">
           <span className="current">{score}</span>
@@ -140,18 +149,19 @@ const TargetInfo = styled.div`
   align-items: center;
   gap: 16px;
 `;
-const Avatar = styled.div`
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #38bdf8, #0284c7);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
-  font-weight: 700;
-`;
+
+// const Avatar = styled.div`
+//   width: 48px;
+//   height: 48px;
+//   border-radius: 50%;
+//   background: linear-gradient(135deg, #38bdf8, #0284c7);
+//   color: white;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   font-size: 1.25rem;
+//   font-weight: 700;
+// `;
 const TargetName = styled.div`
   font-size: 1.1rem;
   font-weight: 700;

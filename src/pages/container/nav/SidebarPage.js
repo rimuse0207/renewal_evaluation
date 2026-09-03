@@ -111,19 +111,34 @@ const SidebarPage = () => {
           성과평가 종합
         </NavItem>
 
-        {Login_Info?.adminMenuIsOpen ? (
+        {Login_Info?.isEvalAccessMenu && (
           <>
             <NavItem
               onClick={() => Navigation("/Admin/Home")}
               $active={location.pathname.startsWith("/Admin")}
             >
-              평가 대상자 현황
+              평가 대상자
             </NavItem>
+          </>
+        )}
+        {Login_Info?.isEvalAccessResultMenu && (
+          <>
             <NavItem
               onClick={() => Navigation("/DashboardAdmin/Dashboard")}
               $active={location.pathname.startsWith("/DashboardAdmin")}
             >
               평가 결과 조회
+            </NavItem>
+          </>
+        )}
+
+        {Login_Info?.isEvalAccessHRMenu ? (
+          <>
+            <NavItem
+              onClick={() => Navigation("/HR/User")}
+              $active={location.pathname.startsWith("/HR/User")}
+            >
+              평가 결과 조회 권한 관리
             </NavItem>
           </>
         ) : (
