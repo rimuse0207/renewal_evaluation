@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import LoginMainPage from "../pages/container/login/LoginPage";
 import LoginRoute from "./LoginRoute/LoginRouteMainPage";
@@ -11,11 +11,13 @@ import PerformanceMainPage from "../pages/container/admin/performance/Performanc
 import OverallMainPage from "../pages/container/admin/overall/OverallMainPage";
 import AdminResultDashboardPage from "../pages/container/admin/HRTable/AdminResultDashboardPage";
 import PermissionGrantPage from "../pages/container/admin/user/PermissionGrantPage";
+import axios from "axios";
 
 const RouterMainPage = () => {
   const User_Info = useSelector(
     (state) => state.Login_Info_Reducer_State.Login_Info,
   );
+
   const [RouterInfo, setRouterInfo] = useState([
     {
       path: "/",

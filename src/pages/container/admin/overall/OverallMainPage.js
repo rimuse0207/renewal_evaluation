@@ -16,7 +16,7 @@ export default function OverallMainPage() {
   const { evalYear, userId } = useParams();
 
   const { state, computed, actions } = useOverallEval(evalYear, userId);
-  console.log("overallstate", state);
+
   if (state.loading) {
     return (
       <div style={{ padding: "50px", textAlign: "center" }}>
@@ -32,7 +32,7 @@ export default function OverallMainPage() {
         ? "2차 평가자"
         : "";
   const isDone = state.targetInfo.status === "DONE";
-  console.log("ADASDASDASD", state.targetInfo);
+
   return (
     <LayoutContainer>
       <SidebarPage />

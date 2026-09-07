@@ -19,12 +19,16 @@ const SidebarHeader = styled.div`
   text-align: center;
   margin-top: 20px;
   border-bottom: 1px solid lightgray;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Logo = styled.div`
   font-size: 1.4rem;
   font-weight: 800;
-  color: #0ea5e9;
+  /* color: #0ea5e9; */
+  color: black;
   letter-spacing: -0.5px;
   margin-bottom: 10px;
 `;
@@ -98,7 +102,7 @@ const SidebarPage = () => {
   );
   return (
     <Sidebar>
-      <SidebarHeader>
+      <SidebarHeader onClick={() => Navigation("/Home")}>
         <Logo>{COMPANY_NAME}</Logo>
         <Logo>인사평가 시스템</Logo>
       </SidebarHeader>
@@ -138,7 +142,7 @@ const SidebarPage = () => {
               onClick={() => Navigation("/HR/User")}
               $active={location.pathname.startsWith("/HR/User")}
             >
-              평가 결과 조회 권한 관리
+              권한 관리
             </NavItem>
           </>
         ) : (

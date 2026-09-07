@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { gradeCalcule } from "../../../../../public/global/gradeCalcule";
 
 export default function TargetTableRow({ target, calculators, onNavigate }) {
   const perfState = calculators.getEvalState(target, "perf");
@@ -11,8 +12,9 @@ export default function TargetTableRow({ target, calculators, onNavigate }) {
     ? !!target.comment_1st || target.master_status === "DONE"
     : (!!target.comment_1st && !!target.comment_2nd) ||
       target.master_status === "DONE";
+
   const finalCombined = target.final_grade_2nd || target.final_grade_1st;
-  console.log("Target", target, isCompleted);
+
   return (
     <tr>
       {/* 1. 대상자 정보 */}
@@ -160,7 +162,7 @@ export default function TargetTableRow({ target, calculators, onNavigate }) {
               <span className="role">1차 최종</span>
               {target.final_grade_1st ? (
                 <span className="score text-blue">
-                  {target.final_grade_1st}
+                  {gradeCalcule(target?.perf_score_1st, target?.comp_score_1st)}
                 </span>
               ) : (
                 <span className="empty">-</span>
@@ -169,20 +171,29 @@ export default function TargetTableRow({ target, calculators, onNavigate }) {
             {!isBoth && (
               <div className="score-row" style={{ padding: "2px 6px" }}>
                 <span className="role">2차 최종</span>
-                {target.final_grade_2nd ? (
-                  <span className="score text-blue">
-                    {target.final_grade_2nd}
-                  </span>
-                ) : (
-                  <span className="empty">-</span>
-                )}
+
+                <span className="score text-blue">
+                  {gradeCalcule(target?.perf_score_2nd, target?.comp_score_2nd)}
+                </span>
               </div>
             )}
           </ScoreGrid>
           <FinalGradeBadge
-            className={isCompleted && finalCombined ? finalCombined : "nothing"}
+            className={
+              isCompleted && finalCombined
+                ? gradeCalcule(
+                    (target?.perf_score_1st + target?.perf_score_2nd) / 2,
+                    (target?.comp_score_1st + target?.comp_score_2nd) / 2,
+                  )
+                : "nothing"
+            }
           >
-            {isCompleted && finalCombined ? finalCombined : "-"}
+            {isCompleted && finalCombined
+              ? gradeCalcule(
+                  (target?.perf_score_1st + target?.perf_score_2nd) / 2,
+                  (target?.comp_score_1st + target?.comp_score_2nd) / 2,
+                )
+              : "-"}
           </FinalGradeBadge>
         </EvalCell>
       </Td>

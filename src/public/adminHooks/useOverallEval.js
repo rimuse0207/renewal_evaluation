@@ -25,7 +25,7 @@ export const useOverallEval = (evalYear, userId) => {
           evalYear,
           userId,
         });
-        console.log("OverAllresponse", response);
+
         const data = response.data;
         if (response.status || data?.success) {
           setTargetInfo(data.targetInfo);
@@ -146,7 +146,7 @@ export const useOverallEval = (evalYear, userId) => {
         isBoth: isBoth,
         comment1ST: comments.comment1ST,
         comment2ND: comments.comment2ND,
-        finalGrade: getGrade(scores.finalTotal),
+        finalGrade: getGrade(myRole === "1ST" ? scores.total1 : scores.total2),
         evalYear,
       });
 

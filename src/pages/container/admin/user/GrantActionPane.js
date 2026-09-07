@@ -2,25 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Select from "react-select";
 
-// const GRANTEE_OPTIONS = [
-//   {
-//     value: "990001",
-//     label: "홍길동 부문장 (임원진 / 990001)",
-//     name: "홍길동",
-//     title: "부문장",
-//     dept: "임원진",
-//     empNo: "990001",
-//   },
-//   {
-//     value: "990002",
-//     label: "김임원 상무 (임원진 / 990002)",
-//     name: "김임원",
-//     title: "상무",
-//     dept: "임원진",
-//     empNo: "990002",
-//   },
-// ];
-
 const selectStyles = {
   control: (base, state) => ({
     ...base,
@@ -105,7 +86,6 @@ export default function GrantActionPane({
               <TargetItem key={t.user_id} $isNew={!t.isExisting}>
                 <div className="t-info">
                   <div className="t-header">
-                    {/* 🌟 기존/신규 뱃지 추가 */}
                     <StatusBadge $isNew={!t.isExisting}>
                       {t.isExisting ? "기존" : "신규"}
                     </StatusBadge>

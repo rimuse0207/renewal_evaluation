@@ -17,7 +17,7 @@ export const usePersonalSelect = (selectedYear) => {
           selectedYear: year,
         },
       );
-      console.log("USER request request", request);
+
       if (request.status) {
         setPersonalStatus(request.data);
         setCurrentData(request.data.personalTask || []);

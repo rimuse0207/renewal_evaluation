@@ -18,7 +18,7 @@ export default function MainPage() {
 
   const { personalStatus, commonTasks, personalTasks, hasData } =
     usePersonalSelect(Login_Info?.selectedMyYear);
-  console.log("personalStatus", personalStatus, personalTasks);
+
   const handleYearChange = (e) => {
     dispatch(Change_User_Selected_Year(e.target.value));
   };

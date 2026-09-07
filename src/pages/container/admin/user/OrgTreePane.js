@@ -10,7 +10,7 @@ export default function OrgTreePane({
   onTeamClick,
 }) {
   return (
-    <LeftPane>
+    <LeftPane style={grantee ? {} : { overflow: "hidden" }}>
       {!grantee && (
         <BlockOverlay>
           <span>

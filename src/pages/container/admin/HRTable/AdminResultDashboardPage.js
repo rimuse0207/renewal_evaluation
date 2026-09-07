@@ -36,7 +36,7 @@ export default function AdminResultDashboardPage() {
     groupedData,
     chartData,
   } = useAdminResult();
-  console.log(groupedData, chartData);
+
   const groupOptions = Object.keys(DEPT_GROUPS);
 
   const totalEvaluated =

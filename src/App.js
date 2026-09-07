@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import RouterMainPage from "./routes/RouterMainPage";
+import axios from "axios";
 
 function App() {
   return (

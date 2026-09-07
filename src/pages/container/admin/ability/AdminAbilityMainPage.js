@@ -14,7 +14,6 @@ export default function CompetencyEvalPage() {
 
   const { state, computed, actions } = useAbilityEval(evalYear, userId);
 
-  console.log(state);
   if (state.loading)
     return (
       <div style={{ padding: "50px", textAlign: "center" }}>

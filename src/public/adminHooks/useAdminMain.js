@@ -77,7 +77,7 @@ export const useAdminMain = () => {
         const res = await Request_Get_Axios(`/Admin/adminUserList`, {
           selectedYear: Login_Info?.selectedAdminYear,
         });
-        console.log(res);
+
         if (res.status) {
           setTargets(processTargetData(res.data));
         }
@@ -137,7 +137,6 @@ export const useAdminMain = () => {
   // 상태 계산 함수들 반환
   const getEvalState = useCallback(
     (target, type) => {
-      console.log("QWEQWEQE", target);
       const isBoth = target.evaluator_1st === target.evaluator_2nd;
       const myTargetRole =
         target.evaluator_1st === Login_Info?.email ? "1st" : "2nd";

@@ -10,7 +10,6 @@ export default function GradeGroupTable({
   colorHex,
 }) {
   if (dataList.length === 0) return null;
-  console.log(dataList);
 
   const handleRowClick = (userId) => {
     const url = `/Admin/Overall/${evalYear}/${userId}`;

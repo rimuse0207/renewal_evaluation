@@ -19,6 +19,9 @@ export const usePermissionGrant = () => {
   const [initialTargets, setInitialTargets] = useState([]);
   const [isLoadingTargets, setIsLoadingTargets] = useState(false);
   const [Grantee_Options, setGrantee_Options] = useState([]);
+  const [nowIncludeMenuAccessUser, setNowIncludeMenuAccessUser] = useState([]);
+
+  const [activeMenu, setActiveMenu] = useState("MENU");
 
   // 연도 변경 시 초기화
   useEffect(() => {
@@ -32,10 +35,13 @@ export const usePermissionGrant = () => {
 
   useEffect(() => {
     getGranteeUserList();
-  }, []);
+  }, [activeMenu, selectedYear]);
   const getGranteeUserList = async () => {
-    const req = await Request_Get_Axios("/Admin/getGranteeUserList");
-    console.log("ASDASDAD", req);
+    const req = await Request_Get_Axios("/Admin/getGranteeUserList", {
+      activeMenu,
+      selectedYear,
+    });
+
     if (req.status) {
       setGrantee_Options(req.data);
     }
@@ -95,6 +101,48 @@ export const usePermissionGrant = () => {
     };
     fetchTeamUsers();
   }, [selectedTeam, selectedYear]);
+
+  const handleChangeMenuUserList = async (role_code) => {
+    setNowIncludeMenuAccessUser([]);
+    const req = await Request_Get_Axios("/Admin/getMenuAccessList", {
+      role_code,
+    });
+
+    if (req.status) {
+      setNowIncludeMenuAccessUser(req.data);
+    }
+  };
+
+  const handleAddAccessMenuUserList = async (role_code, selectUser) => {
+    const req = await Request_Post_Axios("/Admin/saveMenuAccessList", {
+      role_code,
+      selectUser: selectUser.value,
+    });
+
+    if (req.status) {
+      setNowIncludeMenuAccessUser(
+        nowIncludeMenuAccessUser.concat({
+          user_id: selectUser.value,
+          fullName: selectUser.fullName,
+          titleName: selectUser.titleName,
+          departmentName: selectUser.departmentName,
+          role_code: role_code,
+        }),
+      );
+    }
+  };
+
+  const handleDeleteAccessMenuUserList = async (role_code, selectUser) => {
+    const req = await Request_Post_Axios("/Admin/deleteMenuAccessList", {
+      role_code,
+      selectUser: selectUser,
+    });
+    if (req.status) {
+      setNowIncludeMenuAccessUser(
+        nowIncludeMenuAccessUser.filter((item) => item.user_id !== selectUser),
+      );
+    }
+  };
 
   // 액션 핸들러
   const toggleDept = (deptName) => {
@@ -174,6 +222,8 @@ export const usePermissionGrant = () => {
       isLoadingTargets,
       isAllChecked,
       Grantee_Options,
+      nowIncludeMenuAccessUser,
+      activeMenu,
     },
     actions: {
       setSelectedYear,
@@ -183,6 +233,10 @@ export const usePermissionGrant = () => {
       handleToggleTarget,
       handleToggleAll,
       handleGrantSubmit,
+      handleChangeMenuUserList,
+      handleAddAccessMenuUserList,
+      handleDeleteAccessMenuUserList,
+      setActiveMenu,
     },
   };
 };

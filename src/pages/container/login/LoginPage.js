@@ -149,15 +149,14 @@ export default function LoginPage() {
         code: authCode,
         uuid: uuId,
       });
-      console.log(request);
+
       if (request.status) {
-        // TODO: 메인 대시보드로 이동
         if (request.data.Not_eligible) {
           setApiError("인사평가 대상자가 아닙니다. 인사팀에게 문의바랍니다.");
           setStep(1);
           return alert("인사평가 대상자가 아닙니다. 인사팀에게 문의바랍니다.");
         }
-        console.log(request);
+
         const token = request.data.token;
 
         const LoginInfo = request.data.sending_user_Info;
@@ -166,7 +165,6 @@ export default function LoginPage() {
 
         localStorage.setItem("Token", token);
 
-        console.log("로그인 성공:", request);
         Navgation("/Home");
       } else {
         // 로그인 실패
@@ -201,7 +199,7 @@ export default function LoginPage() {
         {step === 1 ? (
           <Form onSubmit={handleRequestCode}>
             <InputGroup>
-              <Label htmlFor="userId">사내 계정</Label>
+              <Label htmlFor="userId">사내 이메일</Label>
               <InputContainer>
                 {tooltip.show && (
                   <TooltipBubble>{tooltip.message}</TooltipBubble>

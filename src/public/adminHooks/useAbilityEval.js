@@ -27,7 +27,7 @@ export const useAbilityEval = (evalYear, userId) => {
           evalYear,
           userId,
         });
-        console.log("ADresponse", response);
+
         if (response.status || response.data?.success) {
           const data = response.data;
           setMyRole(data.myRole);
