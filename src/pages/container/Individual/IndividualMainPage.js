@@ -42,7 +42,6 @@ export default function PerformanceEditPage() {
     handleAddTask,
     handleRemoveTask,
     handleChange,
-    handleFileChange,
     handleTempSave,
     handleFinalSubmit,
   } = usePersonalApply();
@@ -50,10 +49,9 @@ export default function PerformanceEditPage() {
   const mainContentRef = useRef(null);
   const prevTaskCount = useRef(tasks.length);
 
-  // 🌟 항목 추가 시 전체 바닥이 아닌 '새로 추가된 박스'로 이동하는 로직
   useEffect(() => {
     if (tasks.length > prevTaskCount.current) {
-      const lastTask = tasks[tasks.length - 1]; // 새로 추가된 마지막 항목
+      const lastTask = tasks[tasks.length - 1];
       if (lastTask) {
         setTimeout(() => {
           const newCardElement = document.getElementById(
@@ -62,7 +60,7 @@ export default function PerformanceEditPage() {
           if (newCardElement) {
             newCardElement.scrollIntoView({
               behavior: "smooth",
-              block: "center", // 🌟 박스를 화면 중앙에 위치시킴 ("start"로 하면 화면 최상단에 붙음)
+              block: "center",
             });
           }
         }, 100);
@@ -73,10 +71,8 @@ export default function PerformanceEditPage() {
 
   return (
     <LayoutContainer>
-      {/* 좌측 고정 사이드바 */}
       <SidebarPage />
 
-      {/* 우측 메인 콘텐츠 영역 */}
       <MainContent ref={mainContentRef}>
         <ContentWrapper>
           <PageHeader>
@@ -180,24 +176,7 @@ export default function PerformanceEditPage() {
                       </Select>
                     </FormGroup>
                   </GridRow>
-                  <FullRow>
-                    <FormGroup>
-                      <Label>증빙 파일 첨부</Label>
-                      <FileInputWrapper>
-                        <FileInputLabel htmlFor={`file-${item.task_id}`}>
-                          파일 찾기
-                        </FileInputLabel>
-                        <HiddenFileInput
-                          id={`file-${item.task_id}`}
-                          type="file"
-                          onChange={(e) => handleFileChange(item.task_id, e)}
-                        />
-                        <FileNameDisplay>
-                          {item.file_url ? item.file_url : "선택된 파일 없음"}
-                        </FileNameDisplay>
-                      </FileInputWrapper>
-                    </FormGroup>
-                  </FullRow>
+
                   <FullRow>
                     <FormGroup>
                       <Label>추진 업무</Label>
@@ -432,7 +411,7 @@ const CardBody = styled.div`
 `;
 const GridRow = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 `;
 const FullRow = styled.div`
@@ -518,40 +497,6 @@ const Textarea = styled.textarea`
     border-color: #0ea5e9;
     box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
   }
-`;
-const FileInputWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  height: 44px;
-`;
-const HiddenFileInput = styled.input`
-  display: none;
-`;
-const FileInputLabel = styled.label`
-  background-color: #f1f5f9;
-  color: #475569;
-  border: 1px solid #cbd5e1;
-  padding: 0 16px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  &:hover {
-    background-color: #e2e8f0;
-  }
-`;
-const FileNameDisplay = styled.span`
-  font-size: 0.9rem;
-  color: #64748b;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  flex: 1;
 `;
 const AddTaskButton = styled.button`
   display: flex;

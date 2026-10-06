@@ -21,7 +21,6 @@ export const usePersonalApply = () => {
         alert(
           "이미 제출이 완료되었거나 마감된 평가입니다. 수정할 수 없습니다.",
         );
-
         Navigation("/Home", { replace: true });
       }
     }
@@ -39,7 +38,6 @@ export const usePersonalApply = () => {
           task_result: "",
           weight: "",
           self_score: "10",
-          file_url: "",
         },
       ]);
     }
@@ -63,7 +61,6 @@ export const usePersonalApply = () => {
         task_result: "",
         weight: "",
         self_score: "10",
-        file_url: "",
       },
     ]);
   };
@@ -77,21 +74,14 @@ export const usePersonalApply = () => {
   };
 
   const handleChange = (id, field, value) => {
-    setTasks(
-      tasks.map((task) =>
+    setTasks((prev) =>
+      prev.map((task) =>
         task.task_id === id ? { ...task, [field]: value } : task,
       ),
     );
   };
 
-  const handleFileChange = (id, e) => {
-    const file = e.target.files[0];
-    if (file) {
-      handleChange(id, "file_url", file.name);
-    }
-  };
-
-  // 4. API 통신 로직
+  // 4. API 통신 로직 (JSON 전송)
   const saveToServer = async (actionType) => {
     try {
       if (!personalStatus.master_id) return;
@@ -141,7 +131,6 @@ export const usePersonalApply = () => {
     saveToServer("SUBMIT");
   };
 
-  // 5. 컴포넌트에서 필요한 모든 값과 함수 반환
   return {
     Navigation,
     tasks,
@@ -151,7 +140,6 @@ export const usePersonalApply = () => {
     handleAddTask,
     handleRemoveTask,
     handleChange,
-    handleFileChange,
     handleTempSave,
     handleFinalSubmit,
   };

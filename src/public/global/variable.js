@@ -39,14 +39,14 @@ export const YearList = [
 
 export const MOCK_ORG_BY_YEAR = {
   2026: {
-    경영지원: ["경영지원1", "경영지원2", "재무팀", "인사총무팀", "IT팀"],
+    경영지원: ["재무/회계/비서", "인사/총무/IT"],
     CE: [
-      "dicer",
-      "grinder",
-      "laser",
-      "A_dicer",
-      "A_grinder",
-      "A_laser",
+      "Dicer(동탄)",
+      "Grinder(동탄)",
+      "Laser(동탄)",
+      "Dicer(아산)",
+      "Grinder(아산)",
+      "Laser(아산)",
       "기술교육팀",
       "안전팀",
     ],
@@ -54,8 +54,8 @@ export const MOCK_ORG_BY_YEAR = {
       "영업 1그룹",
       "영업 2그룹",
       "영업 3그룹",
-      "영업기술",
-      "부품소재",
+      "영업기술팀",
+      "부품소재팀",
       "OEM",
     ],
   },

@@ -3,7 +3,15 @@ import { Request_Get_Axios } from "../../API";
 
 export const DEPT_GROUPS = {
   전체: "ALL",
-  "경영지원 전체": ["경영지원2", "경영지원1", "재무팀", "인사총무팀", "IT팀"],
+  "경영지원 전체": [
+    "경영지원2",
+    "경영지원1",
+    "재무팀",
+    "인사총무팀",
+    "IT팀",
+    "재무/회계/비서",
+    "인사/총무/IT",
+  ],
   "CE 전체": [
     "A_grinder",
     "A_dicer",
@@ -14,6 +22,12 @@ export const DEPT_GROUPS = {
     "ce지원",
     "기술교육팀",
     "안전팀",
+    "Dicer(동탄)",
+    "Grinder(동탄)",
+    "Laser(동탄)",
+    "Dicer(아산)",
+    "Grinder(아산)",
+    "Laser(아산)",
   ],
   "영업 전체": [
     "영업1팀",
@@ -23,6 +37,11 @@ export const DEPT_GROUPS = {
     "영업기술",
     "부품소재",
     "OEM",
+    "부품소재팀",
+    "영업기술팀",
+    "영업 1그룹",
+    "영업 2그룹",
+    "영업 3그룹",
   ],
 };
 export const useAdminResult = () => {
