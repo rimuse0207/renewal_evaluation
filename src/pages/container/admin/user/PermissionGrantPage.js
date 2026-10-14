@@ -118,7 +118,7 @@ export default function PermissionGrantPage() {
                           setSelectedRole("EVAL_ADMIN");
                         }}
                       >
-                        <div className="role-name">평가 대상자 메뉴</div>
+                        <div className="role-name">부서원 평가 메뉴</div>
                         <div className="role-desc">1차, 2차 평가 작성 권한</div>
                       </RoleItem>
                       <RoleItem
@@ -128,8 +128,8 @@ export default function PermissionGrantPage() {
                           setSelectedRole("EVAL_RESULT_ADMIN");
                         }}
                       >
-                        <div className="role-name">평가 결과 조회 메뉴</div>
-                        <div className="role-desc">평가 결과 조회 전용</div>
+                        <div className="role-name">평가 결과 통계 메뉴</div>
+                        <div className="role-desc">평가 결과 통계 전용</div>
                       </RoleItem>
                       <RoleItem
                         $active={selectedRole === "HR_ADMIN"}
@@ -149,9 +149,9 @@ export default function PermissionGrantPage() {
                     <RolePaneHeader>
                       <PaneTitle>
                         {selectedRole === "EVAL_ADMIN"
-                          ? "평가 대상자 메뉴 접근 권한"
+                          ? "부서원 평가 접근 권한"
                           : selectedRole === "EVAL_RESULT_ADMIN"
-                            ? "평가 결과 조회 메뉴 접근 권한"
+                            ? "평가 결과 통계 메뉴 접근 권한"
                             : "권한 관리 메뉴 접근 권한"}
                         <span className="badge">
                           {state?.nowIncludeMenuAccessUser?.length || 0}명

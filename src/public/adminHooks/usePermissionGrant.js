@@ -41,7 +41,7 @@ export const usePermissionGrant = () => {
       activeMenu,
       selectedYear,
     });
-    console.log("reqreq", req);
+
     if (req.status) {
       setGrantee_Options(req.data);
     }

@@ -16,7 +16,7 @@ export default function PerformanceResultTable({
               비중
             </Th>
             <Th width="10%" align="center">
-              본인평가
+              본인 평가
             </Th>
             <Th width="10%" align="center">
               1차 환산 점수

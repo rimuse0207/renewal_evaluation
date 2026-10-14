@@ -12,6 +12,7 @@ import OverallMainPage from "../pages/container/admin/overall/OverallMainPage";
 import AdminResultDashboardPage from "../pages/container/admin/HRTable/AdminResultDashboardPage";
 import PermissionGrantPage from "../pages/container/admin/user/PermissionGrantPage";
 import axios from "axios";
+import PrintOverallEvalPage from "../pages/container/admin/overall/Print/PrintOverallEvalPage";
 
 const RouterMainPage = () => {
   const User_Info = useSelector(
@@ -62,6 +63,13 @@ const RouterMainPage = () => {
       withAuthorization: true,
       withAdminAuthorization: false,
     },
+    {
+      path: "/Print/OverallEval/:evalYear/:userId",
+      element: <PrintOverallEvalPage></PrintOverallEvalPage>,
+      withAuthorization: true,
+      withAdminAuthorization: false,
+    },
+
     {
       path: "/HR/User",
       element: <PermissionGrantPage></PermissionGrantPage>,

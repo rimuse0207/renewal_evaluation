@@ -35,7 +35,7 @@ export default function PerformanceMainPage() {
         <ContentWrapper>
           {/* 1. 공통 헤더 */}
           <EvalHeader
-            title={`${roleLabel} 성과평가 작성`}
+            title={`${roleLabel} 성과평가`}
             desc={
               <>
                 피평가자가 작성한 업무 실적을 확인하고 평가 점수를 부여해주세요.

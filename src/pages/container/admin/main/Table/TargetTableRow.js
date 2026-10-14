@@ -159,7 +159,7 @@ export default function TargetTableRow({ target, calculators, onNavigate }) {
         <EvalCell $isComprehensive>
           <ScoreGrid style={{ maxWidth: "120px", marginBottom: "8px" }}>
             <div className="score-row" style={{ padding: "2px 6px" }}>
-              <span className="role">1차 최종</span>
+              <span className="role">1차 종합</span>
               {target.final_grade_1st ? (
                 <span className="score text-blue">
                   {gradeCalcule(target?.perf_score_1st, target?.comp_score_1st)}
@@ -170,7 +170,7 @@ export default function TargetTableRow({ target, calculators, onNavigate }) {
             </div>
             {!isBoth && (
               <div className="score-row" style={{ padding: "2px 6px" }}>
-                <span className="role">2차 최종</span>
+                <span className="role">2차 종합</span>
 
                 <span className="score text-blue">
                   {gradeCalcule(target?.perf_score_2nd, target?.comp_score_2nd)}

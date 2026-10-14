@@ -31,7 +31,7 @@ export default function MainPage() {
       <MainContent>
         <ContentWrapper>
           <PageHeader>
-            <PageTitle>성과평가 종합</PageTitle>
+            <PageTitle>본인 평가 작성</PageTitle>
           </PageHeader>
 
           <TopSection>
@@ -86,7 +86,7 @@ export default function MainPage() {
           <PerformanceSection>
             <SectionHeader>
               <SectionTitle>
-                {Login_Info?.selectedMyYear}년도 업무실적 및 본인평가
+                {Login_Info?.selectedMyYear}년도 업무실적 및 본인 평가
               </SectionTitle>
               {personalStatus?.status === "TEMP" && (
                 <EditButton onClick={() => Navigation("/Write")}>

@@ -112,7 +112,7 @@ const SidebarPage = () => {
           onClick={() => Navigation("/Home")}
           $active={location.pathname === "/Home"}
         >
-          성과평가 종합
+          본인 평가 작성
         </NavItem>
 
         {Login_Info?.isEvalAccessMenu && (
@@ -121,7 +121,7 @@ const SidebarPage = () => {
               onClick={() => Navigation("/Admin/Home")}
               $active={location.pathname.startsWith("/Admin")}
             >
-              평가 대상자
+              부서원 평가
             </NavItem>
           </>
         )}
@@ -131,7 +131,7 @@ const SidebarPage = () => {
               onClick={() => Navigation("/DashboardAdmin/Dashboard")}
               $active={location.pathname.startsWith("/DashboardAdmin")}
             >
-              평가 결과 조회
+              평가 결과 통계
             </NavItem>
           </>
         )}

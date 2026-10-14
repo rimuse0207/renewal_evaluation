@@ -10,17 +10,21 @@ import PerformanceResultTable from "./Table/PerformanceResultTable";
 import CompetencyResultTable from "./Table/AbilityResultTable";
 import GradeSummaryCards from "./Card/GradeSummaryCards";
 import CommentSectionBox from "./Card/CommentSectionBos";
+import { useSelector } from "react-redux";
 
 export default function OverallMainPage() {
   const Navigation = useNavigate();
   const { evalYear, userId } = useParams();
 
   const { state, computed, actions } = useOverallEval(evalYear, userId);
+  const Login_Info = useSelector(
+    (state) => state.Login_Info_Reducer_State?.Login_Info,
+  );
 
   if (state.loading) {
     return (
       <div style={{ padding: "50px", textAlign: "center" }}>
-        종합평가 데이터를 불러오는 중입니다...
+        종합 의견 데이터를 불러오는 중입니다...
       </div>
     );
   }
@@ -28,36 +32,44 @@ export default function OverallMainPage() {
   const roleLabel =
     state.myRole === "1ST"
       ? "1차 평가자"
-      : state.myRole === "2ST"
+      : state.myRole === "2ND"
         ? "2차 평가자"
-        : "";
+        : state.myRole === "SELECT"
+          ? "조회 전용"
+          : "";
+
   const isDone = state.targetInfo.status === "DONE";
+
+  const handlePrintOpen = () => {
+    window.open(
+      `/Print/OverallEval/${evalYear}/${userId}`,
+      "_blank",
+      "width=900,height=800",
+    );
+  };
 
   return (
     <LayoutContainer>
       <SidebarPage />
       <MainContent>
         <ContentWrapper>
-          {/* 1. 공통 헤더 */}
           <EvalHeader
-            title={`${roleLabel} 종합평가 작성`}
+            title={`${roleLabel} 종합 의견 작성`}
             desc={
               <>
                 대상자의 <strong>성과평가</strong> 및 <strong>역량평가</strong>{" "}
-                세부 결과를 종합적으로 확인하고, 최종 평가 의견을 작성해주세요.
+                세부 결과를 종합적으로 확인하고, 종합 의견을 작성해주세요.
               </>
             }
             onBack={() => Navigation(-1)}
           />
 
-          {/* 2. 공통 대상자 패널 (종합평가는 일괄 적용 버튼이 없으므로 showBatch=false) */}
           <EvalTargetPanel
             targetInfo={state.targetInfo}
             roleLabel={roleLabel}
             showBatch={false}
           />
 
-          {/* 3. 성과평가 결과 (조회용 테이블) */}
           <SectionTitle>1. 성과평가 결과 (조회용)</SectionTitle>
           <PerformanceResultTable
             tasks={state.performanceTasks}
@@ -65,7 +77,6 @@ export default function OverallMainPage() {
             totalPerf2={computed.scores.perf2}
           />
 
-          {/* 4. 역량평가 결과 (조회용 테이블) */}
           <SectionTitle>2. 역량평가 결과 (조회용)</SectionTitle>
           <CompetencyResultTable
             abilityItems={state.competencyAbility}
@@ -73,7 +84,6 @@ export default function OverallMainPage() {
             scores={computed.scores}
           />
 
-          {/* 5. 최종 평가 등급 산출 UI */}
           <SectionTitle>3. 최종 평가 등급 점수</SectionTitle>
           <GradeSummaryCards
             scores={computed.scores}
@@ -81,24 +91,30 @@ export default function OverallMainPage() {
             getGrade={computed.getGrade}
           />
 
-          {/* 6. 종합 의견(코멘트) 작성 */}
           <SectionTitle>4. 종합 의견 작성</SectionTitle>
           <CommentSectionBox
             myRole={state.myRole}
             isBoth={state.isBoth}
             comments={state.comments}
             onCommentChange={actions.handleCommentChange}
-            isDone={isDone}
+            isDone={isDone || state.myRole === "SELECT"}
           />
 
-          {/* 7. 최종 제출 영역 */}
-          {!isDone && (
-            <ActionArea>
+          <ActionArea>
+            {/* 프린터 출력 버튼 (SELECT 권한일 때만 활성화) */}
+            {state.myRole === "SELECT" && Login_Info?.isEvalAccessHRMenu ? (
+              <PrintButton onClick={handlePrintOpen}>프린터 출력</PrintButton>
+            ) : (
+              ""
+            )}
+
+            {/* 기존 제출 버튼 */}
+            {!isDone && (state.myRole === "2ND" || state.myRole === "1ST") && (
               <FinalSubmitButton onClick={actions.handleSubmit}>
                 종합 의견 및 최종 평가 제출
               </FinalSubmitButton>
-            </ActionArea>
-          )}
+            )}
+          </ActionArea>
         </ContentWrapper>
       </MainContent>
     </LayoutContainer>
@@ -145,6 +161,21 @@ const ActionArea = styled.div`
   margin-top: 40px;
   padding-top: 24px;
   border-top: 1px solid #e2e8f0;
+`;
+const PrintButton = styled.button`
+  padding: 16px 40px;
+  background-color: #475569;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3);
+  &:hover {
+    background-color: #334155;
+  }
 `;
 const FinalSubmitButton = styled.button`
   padding: 16px 40px;

@@ -31,7 +31,7 @@ export default function CompetencyEvalPage() {
         <ContentWrapper>
           {/* 1. 공통 헤더 (재사용) */}
           <EvalHeader
-            title={`${roleLabel} 역량평가 작성`}
+            title={`${roleLabel} 역량평가`}
             desc={
               <>
                 각 부문(능력,태도)별 점수 합산 후{" "}

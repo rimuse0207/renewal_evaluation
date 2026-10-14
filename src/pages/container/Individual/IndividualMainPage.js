@@ -3,6 +3,7 @@ import styled from "styled-components";
 import SidebarPage from "../nav/SidebarPage";
 
 import { usePersonalApply } from "../../../public/personalHooks/usePersonalApply";
+import Criteria from "../home/criteria/Criteria";
 
 const AutoResizeTextarea = ({ value, onChange, placeholder }) => {
   const textareaRef = useRef(null);
@@ -104,6 +105,8 @@ export default function PerformanceEditPage() {
               </SummaryStatus>
             </SummaryCard>
           </SummaryStickyBar>
+
+          <Criteria></Criteria>
 
           <FormSection>
             {tasks.map((item, index) => (

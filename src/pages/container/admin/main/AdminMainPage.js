@@ -56,11 +56,14 @@ export default function ManagerDashboardPage() {
           {/* 헤더 영역 */}
           <PageHeader>
             <div>
-              <PageTitle>{state.selectedYear}년도 평가 대상자</PageTitle>
+              <PageTitle>
+                {state.selectedYear}년도 부서원 평가 대상자 리스트
+              </PageTitle>
               <PageDesc>
                 <strong>'평가 필요'</strong>는 아직 평가를 하지 않은
                 대상자입니다.{"  "}
-                <strong>평가하기</strong> 버튼을 클릭하여 평가를 진행 해주세요.
+                <strong>'평가하기'</strong> 버튼을 클릭하여 평가를 진행
+                해주세요.
               </PageDesc>
             </div>
             <YearSelect
@@ -69,13 +72,16 @@ export default function ManagerDashboardPage() {
                 dispatch(Change_Admin_Selected_Year(e.target.value))
               }
             >
-              {Login_Info.availableYears?.adminEvalYears?.map((list) => {
+              {/* {Login_Info.availableYears?.adminEvalYears?.map((list) => {
                 return (
                   <option key={list} value={list}>
                     {list}년도 인사평가
                   </option>
                 );
-              })}
+              })} */}
+              <option key={"2026"} value={"2026"}>
+                2026년도 인사평가
+              </option>
             </YearSelect>
           </PageHeader>
 
@@ -152,16 +158,16 @@ export default function ManagerDashboardPage() {
                 <tr>
                   <Th width="20%">대상자 정보</Th>
                   <Th width="21%" align="center">
-                    1. 성과평가
+                    1. 성과 평가
                   </Th>
                   <Th width="21%" align="center">
-                    2. 역량평가
+                    2. 역량 평가
                   </Th>
                   <Th width="26%" align="center">
-                    3. 종합평가 (작성)
+                    3. 종합 의견 (작성)
                   </Th>
                   <Th width="12%" align="center">
-                    최종 등급
+                    종합 등급
                   </Th>
                 </tr>
               </thead>

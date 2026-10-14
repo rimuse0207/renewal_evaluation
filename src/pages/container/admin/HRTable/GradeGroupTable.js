@@ -39,11 +39,9 @@ export default function GradeGroupTable({
                 2차 평가 (성과 / 역량)
               </Th>
               <Th width="18%" align="center">
-                최종 환산 점수
+                종합 점수
               </Th>
-              <Th width="10%" align="center">
-                바로가기
-              </Th>
+              <Th width="10%" align="center"></Th>
             </tr>
           </thead>
           <tbody>

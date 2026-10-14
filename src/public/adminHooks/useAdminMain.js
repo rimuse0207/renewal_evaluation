@@ -217,7 +217,7 @@ export const useAdminMain = () => {
       return {
         text: "평가 필요",
         color: "orange",
-        btnText: "종합 작성",
+        btnText: "의견 작성",
         disabled: false,
         done: false,
       };
