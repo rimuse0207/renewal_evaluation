@@ -1,7 +1,9 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { Request_Get_Axios, Request_Post_Axios } from "../../API";
+import { useNavigate } from "react-router-dom";
 
 export const usePerformanceEval = (evalYear, userId) => {
+  const Navigation = useNavigate();
   const [loading, setLoading] = useState(true);
   const [targetStatus, setTargetStatus] = useState("TEMP");
   const [myRole, setMyRole] = useState(null);
@@ -109,7 +111,10 @@ export const usePerformanceEval = (evalYear, userId) => {
         totalScore: totalCalculatedScore,
         evalYear,
       });
-      if (response.status) alert("성과평가가 성공적으로 제출되었습니다.");
+      if (response.status) {
+        alert("성과평가가 성공적으로 제출되었습니다.");
+        return Navigation(-1);
+      }
     } catch (error) {
       console.error("점수 제출 실패:", error);
       alert(
