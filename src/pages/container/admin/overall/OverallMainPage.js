@@ -84,7 +84,7 @@ export default function OverallMainPage() {
             scores={computed.scores}
           />
 
-          <SectionTitle>3. 최종 평가 등급 점수</SectionTitle>
+          <SectionTitle>3. 종합 평가 점수</SectionTitle>
           <GradeSummaryCards
             scores={computed.scores}
             isBoth={state.isBoth}
