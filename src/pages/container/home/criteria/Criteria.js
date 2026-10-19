@@ -5,7 +5,7 @@ import styled from "styled-components";
 const Criteria = () => {
   return (
     <CriteriaCard>
-      <CriteriaTitle>평점 기준 안내</CriteriaTitle>
+      <CriteriaTitle>평정 기준 안내</CriteriaTitle>
       <CriteriaList>
         {MOCK_CRITERIA?.map((criteria, index) => (
           <CriteriaItem key={index}>

@@ -10,7 +10,7 @@ export default function PrintOverallEvalPage() {
   useEffect(() => {
     if (!state.loading && state.targetInfo) {
       setTimeout(() => {
-        // window.print();
+        window.print();
       }, 800);
     }
   }, [state.loading, state.targetInfo]);
