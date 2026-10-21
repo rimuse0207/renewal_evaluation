@@ -75,7 +75,7 @@ export const useAdminMain = () => {
     const fetchTargetList = async () => {
       try {
         const res = await Request_Get_Axios(`/Admin/adminUserList`, {
-          selectedYear: Login_Info?.selectedAdminYear,
+          selectedYear: "2026",
         });
 
         if (res.status) {

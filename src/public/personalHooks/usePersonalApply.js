@@ -36,7 +36,7 @@ export const usePersonalApply = () => {
           category: "공통",
           task_name: "",
           task_result: "",
-          weight: "",
+          weight: "10",
           self_score: "10",
         },
       ]);
@@ -59,7 +59,7 @@ export const usePersonalApply = () => {
         category: "공통",
         task_name: "",
         task_result: "",
-        weight: "",
+        weight: "10",
         self_score: "10",
       },
     ]);

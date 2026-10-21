@@ -66,23 +66,23 @@ export default function ManagerDashboardPage() {
                 해주세요.
               </PageDesc>
             </div>
-            <YearSelect
+            {/* <YearSelect
               value={state.selectedYear}
               onChange={(e) =>
                 dispatch(Change_Admin_Selected_Year(e.target.value))
               }
             >
-              {/* {Login_Info.availableYears?.adminEvalYears?.map((list) => {
+              {Login_Info.availableYears?.adminEvalYears?.map((list) => {
                 return (
                   <option key={list} value={list}>
                     {list}년도 인사평가
                   </option>
                 );
-              })} */}
+              })}
               <option key={"2026"} value={"2026"}>
                 2026년도 인사평가
               </option>
-            </YearSelect>
+            </YearSelect> */}
           </PageHeader>
 
           <DashCards>
@@ -164,7 +164,7 @@ export default function ManagerDashboardPage() {
                     2. 역량 평가
                   </Th>
                   <Th width="26%" align="center">
-                    3. 종합 의견 (작성)
+                    3. 종합 의견 작성
                   </Th>
                   <Th width="12%" align="center">
                     종합 등급

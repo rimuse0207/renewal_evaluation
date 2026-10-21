@@ -79,7 +79,7 @@ export default function PerformanceEditPage() {
           <PageHeader>
             <HeaderTop>
               <BackButton onClick={() => Navigation("/Home")}>
-                <span className="icon">←</span> 성과평가 종합으로 돌아가기
+                <span className="icon">←</span> 본인 평가 작성(홈)으로 돌아가기
               </BackButton>
             </HeaderTop>
             <PageTitle>업무실적 작성 / 수정</PageTitle>
