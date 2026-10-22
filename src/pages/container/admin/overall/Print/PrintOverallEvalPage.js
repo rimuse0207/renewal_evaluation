@@ -597,7 +597,6 @@ const PrintContainer = styled.div`
     }
   }
 
-  /* 🌟 1페이지 의견/코멘트 테이블 스타일 */
   .comment-grid {
     display: flex;
     flex-direction: column;
@@ -607,9 +606,13 @@ const PrintContainer = styled.div`
   }
 
   .comment-table {
-    border: 2px solid #000;
+    /* border: 2px solid #000;
     height: 100%;
-    min-height: 140px;
+    min-height: 140px; */
+    border: 2px solid #000;
+    /* 핵심: flex: 1을 주어 공간을 50:50으로 나누되, 내용이 길면 유동적으로 밀어냄 */
+    flex: 1;
+    min-height: 100px; /* 한쪽이 너무 줄어들지 않도록 최소 높이 지정 */
 
     th {
       text-align: center;

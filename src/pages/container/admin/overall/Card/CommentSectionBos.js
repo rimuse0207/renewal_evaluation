@@ -130,7 +130,7 @@ const CommentBox = styled.div`
 
 const TextArea = styled.textarea`
   width: 100%;
-  height: 120px;
+  height: 250px;
   padding: 16px;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
@@ -148,7 +148,7 @@ const TextArea = styled.textarea`
 
 const ReadOnlyText = styled.div`
   width: 100%;
-  min-height: 120px;
+  min-height: 250px;
   padding: 16px;
   background-color: #f8fafc;
   border: 1px solid #cbd5e1;
