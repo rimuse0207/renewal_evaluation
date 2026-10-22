@@ -7,6 +7,7 @@ import { useAbilityEval } from "../../../../public/adminHooks/useAbilityEval";
 import { EvalHeader, EvalSummaryBar } from "../common/EvalSharedUI";
 import CompetencySection from "./Section/AblilitySection";
 import { Avatar } from "../main/Table/TargetTableRow";
+import BasicCriteria from "./BasicCriteria";
 
 export default function CompetencyEvalPage() {
   const Navigation = useNavigate();
@@ -42,7 +43,6 @@ export default function CompetencyEvalPage() {
             onBack={() => Navigation(-1)}
           />
 
-          {/* 2. 공통 대상자 & 일괄 적용 패널 (재사용) - Select Option 커스텀을 위해 약간의 변형이 필요하다면 EvalSharedUI 쪽에 children으로 받게 고도화할 수 있습니다 */}
           <ControlPanel>
             <TargetInfo>
               <Avatar>
@@ -81,6 +81,7 @@ export default function CompetencyEvalPage() {
             )}
           </ControlPanel>
 
+          <BasicCriteria></BasicCriteria>
           {/* 3. 공통 요약 바 (재사용) */}
           <EvalSummaryBar
             roleLabel={roleLabel}

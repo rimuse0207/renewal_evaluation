@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useOverallEval } from "../../../../../public/adminHooks/useOverallEval";
+import AblityCriteria from "./AblityCriteria";
 
 export default function PrintOverallEvalPage() {
   const { evalYear, userId } = useParams();
@@ -11,6 +12,7 @@ export default function PrintOverallEvalPage() {
     if (!state.loading && state.targetInfo) {
       setTimeout(() => {
         window.print();
+        window.close();
       }, 800);
     }
   }, [state.loading, state.targetInfo]);
@@ -71,12 +73,10 @@ export default function PrintOverallEvalPage() {
   const score1ST =
     (Number(computed.scores.comp1 || 0) + Number(computed.scores.perf1 || 0)) /
     2;
-  const grade1ST = computed.getGrade(score1ST);
 
   const score2ND =
     (Number(computed.scores.comp2 || 0) + Number(computed.scores.perf2 || 0)) /
     2;
-  const grade2ND = computed.getGrade(score2ND);
 
   // 바닥글 렌더러
   const renderFooter = (pageNum) => (
@@ -85,7 +85,6 @@ export default function PrintOverallEvalPage() {
         [소속] {state.targetInfo?.dept} &nbsp;|&nbsp; [직급]{" "}
         {state.targetInfo?.title} &nbsp;|&nbsp; [성명] {state.targetInfo?.name}
       </span>
-      {/* <span style={{ color: "#555" }}>- {pageNum} / 3 Page -</span> */}
     </PageFooterWrapper>
   );
 
@@ -138,9 +137,14 @@ export default function PrintOverallEvalPage() {
             <tr>
               <th rowSpan="2">구분</th>
               <th rowSpan="2">평가자</th>
-              <th colSpan="3">역량평가 점수 (50%)</th>
-              <th rowSpan="2">성과평가 점수 (50%)</th>
-              <th rowSpan="2">종합 점수</th>
+              <th colSpan="3">① 역량평가 점수 (50%)</th>
+              <th rowSpan="2" style={{ backgroundColor: "#eef2ff" }}>
+                ② 성과평가 점수 (50%)
+              </th>
+              <th rowSpan="2">
+                종합 점수
+                <br /> (① + ②) / 2
+              </th>
               <th rowSpan="2">최종 등급</th>
             </tr>
             <tr>
@@ -163,7 +167,10 @@ export default function PrintOverallEvalPage() {
               >
                 {computed.scores.comp1} 점
               </td>
-              <td align="center" style={{ fontWeight: "bold" }}>
+              <td
+                align="center"
+                style={{ fontWeight: "bold", backgroundColor: "#eef2ff" }}
+              >
                 {computed.scores.perf1} 점
               </td>
               <td align="center" style={{ fontWeight: "bold", color: "blue" }}>
@@ -188,7 +195,10 @@ export default function PrintOverallEvalPage() {
               >
                 {computed.scores.comp2} 점
               </td>
-              <td align="center" style={{ fontWeight: "bold" }}>
+              <td
+                align="center"
+                style={{ fontWeight: "bold", backgroundColor: "#eef2ff" }}
+              >
                 {computed.scores.perf2} 점
               </td>
               <td align="center" style={{ fontWeight: "bold", color: "blue" }}>
@@ -249,37 +259,7 @@ export default function PrintOverallEvalPage() {
         <SectionTitle>Ⅱ. 역량평가</SectionTitle>
 
         {/* 단독 풀사이즈로 변경된 척도 박스 */}
-        {/* <div
-          className="scale-box"
-          style={{ marginBottom: "15px", width: "100%" }}
-        >
-          <div className="scale-title">※ 평정기준</div>
-          <div className="scale-labels">
-            <span>매우 뛰어남(A)</span>
-            <span style={{ marginRight: "15px" }}>뛰어남(B)</span>
-            <span style={{ marginRight: "20px" }}>보통(C)</span>
-            <span>미흡(D)</span>
-          </div>
-          <div className="scale-axis">
-            <div className="axis-line"></div>
-            <div className="tick">
-              <div className="tick-mark"></div>
-              <span>10</span>
-            </div>
-            <div className="tick">
-              <div className="tick-mark"></div>
-              <span>8</span>
-            </div>
-            <div className="tick">
-              <div className="tick-mark"></div>
-              <span>6</span>
-            </div>
-            <div className="tick">
-              <div className="tick-mark"></div>
-              <span>4</span>
-            </div>
-          </div>
-        </div> */}
+        <AblityCriteria></AblityCriteria>
 
         <div className="competency-grid">
           {/* I-1. 능력부문 */}
@@ -394,13 +374,9 @@ export default function PrintOverallEvalPage() {
         {renderFooter(2)}
       </PageSection>
 
-      {/* ========================================================
-          PAGE 3 : 성과평가
-          ======================================================== */}
       <PageSection>
         <SectionTitle>Ⅲ. 성과평가</SectionTitle>
 
-        {/* 🌟 (수정) 테두리가 복구된 평정기준 박스 */}
         <div
           className="legend-box"
           style={{ marginBottom: "15px", width: "100%" }}
@@ -682,7 +658,7 @@ const PrintContainer = styled.div`
       line-height: 1.5;
     }
   }
-
+  /* 
   .scale-box {
     border: 1px solid blue;
     padding: 10px;
@@ -732,7 +708,7 @@ const PrintContainer = styled.div`
       background: blue;
       margin-bottom: 2px;
     }
-  }
+  } */
 
   /* ===== 2페이지 역량평가 본문 스타일 ===== */
   .competency-grid {
