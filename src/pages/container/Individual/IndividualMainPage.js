@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import styled from "styled-components";
 import SidebarPage from "../nav/SidebarPage";
 
@@ -8,16 +8,29 @@ import Criteria from "../home/criteria/Criteria";
 const AutoResizeTextarea = ({ value, onChange, placeholder }) => {
   const textareaRef = useRef(null);
 
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+  useLayoutEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
 
-      if (document.activeElement === textareaRef.current) {
-        textareaRef.current.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-        });
+    const container = el.closest("main") || document.documentElement;
+    const prevScrollTop = container.scrollTop;
+
+    const borderH = el.offsetHeight - el.clientHeight;
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight + borderH}px`;
+
+    container.scrollTop = prevScrollTop;
+
+    if (document.activeElement === el) {
+      const lineHeight = parseFloat(getComputedStyle(el).lineHeight) || 24;
+      const bottomMargin = lineHeight * 3;
+
+      const containerBottom = container.getBoundingClientRect().bottom;
+      const textareaBottom = el.getBoundingClientRect().bottom;
+      const overflow = textareaBottom + bottomMargin - containerBottom;
+
+      if (overflow > 0) {
+        container.scrollTop += overflow;
       }
     }
   }, [value]);
@@ -32,7 +45,6 @@ const AutoResizeTextarea = ({ value, onChange, placeholder }) => {
     />
   );
 };
-
 export default function PerformanceEditPage() {
   const {
     Navigation,
@@ -244,21 +256,23 @@ export default function PerformanceEditPage() {
   );
 }
 
-// ==========================================
-// 💅 Styled Components
-// ==========================================
-
 const LayoutContainer = styled.div`
   display: flex;
   height: 100vh;
   overflow: hidden;
   background-color: #f4f6f8;
 `;
+// const MainContent = styled.main`
+//   flex: 1;
+//   overflow-y: auto;
+//   position: relative;
+//   scroll-behavior: smooth;
+// `;
 const MainContent = styled.main`
   flex: 1;
   overflow-y: auto;
   position: relative;
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth;  ← 삭제 */
 `;
 const ContentWrapper = styled.div`
   margin: 0 auto;
@@ -487,11 +501,15 @@ const Textarea = styled.textarea`
   color: #1e293b;
   outline: none;
   min-height: 120px;
-  max-height: 350px;
   resize: none;
   line-height: 1.6;
   box-sizing: border-box;
-  overflow-y: auto;
+
+  /* 💡 내부 스크롤바 숨김 (메인 스크롤만 사용) */
+  overflow: hidden;
+  /* 💡 타이핑 시 화면 하단에 너무 바짝 붙지 않도록 여백 확보 */
+  scroll-margin-bottom: 60px;
+
   transition:
     border-color 0.2s,
     box-shadow 0.2s;
