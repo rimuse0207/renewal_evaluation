@@ -10,6 +10,7 @@ import GradeGroupTable from "./GradeGroupTable";
 import { ResponsiveBar } from "@nivo/bar";
 import { ResponsivePie } from "@nivo/pie";
 import { YearSelect } from "../main/AdminMainPage";
+import { useSelector } from "react-redux";
 
 const CustomTooltip = ({ color, grade, count, total }) => {
   const percentage = total > 0 ? ((count / total) * 100).toFixed(1) : "0.0";
@@ -38,7 +39,9 @@ export default function AdminResultDashboardPage() {
   } = useAdminResult();
 
   const groupOptions = Object.keys(DEPT_GROUPS);
-
+  const Login_Info = useSelector(
+    (state) => state.Login_Info_Reducer_State?.Login_Info,
+  );
   const totalEvaluated =
     chartData?.barData?.reduce((acc, cur) => acc + cur.count, 0) || 0;
 
@@ -61,12 +64,13 @@ export default function AdminResultDashboardPage() {
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(e.target.value)}
               >
-                <option value="2026">2026년도 인사평가</option>
-                <option value="2025">2025년도 인사평가</option>
-                <option value="2024">2024년도 인사평가</option>
-                <option value="2023">2023년도 인사평가</option>
-                <option value="2022">2022년도 인사평가</option>
-                <option value="2021">2021년도 인사평가</option>
+                {Login_Info?.availableYears?.adminEvalYears?.map((list) => {
+                  return (
+                    <option key={list} value={list}>
+                      {list}년도 인사평가
+                    </option>
+                  );
+                })}
               </YearSelect>
             </div>
           </PageHeader>
