@@ -42,45 +42,52 @@ const RouterMainPage = () => {
       path: "/Admin/Home",
       element: <AdminMainPage></AdminMainPage>,
       withAuthorization: true,
-      withAdminAuthorization: false,
+      withAdminAuthorization: true,
+      requiredMenu: ["EVAL_ADMIN"],
     },
 
     {
       path: "/Admin/Ability/:evalYear/:userId",
       element: <AdminAbilityMainPage></AdminAbilityMainPage>,
       withAuthorization: true,
-      withAdminAuthorization: false,
+      withAdminAuthorization: true,
+      requiredMenu: ["EVAL_ADMIN", "EVAL_RESULT_ADMIN"],
     },
     {
       path: "/Admin/Performance/:evalYear/:userId",
       element: <PerformanceMainPage></PerformanceMainPage>,
       withAuthorization: true,
-      withAdminAuthorization: false,
+      withAdminAuthorization: true,
+      requiredMenu: ["EVAL_ADMIN", "EVAL_RESULT_ADMIN"],
     },
     {
       path: "/Admin/Overall/:evalYear/:userId",
       element: <OverallMainPage></OverallMainPage>,
       withAuthorization: true,
-      withAdminAuthorization: false,
+      withAdminAuthorization: true,
+      requiredMenu: ["EVAL_ADMIN", "EVAL_RESULT_ADMIN"],
     },
     {
       path: "/Print/OverallEval/:evalYear/:userId",
       element: <PrintOverallEvalPage></PrintOverallEvalPage>,
       withAuthorization: true,
-      withAdminAuthorization: false,
+      withAdminAuthorization: true,
+      requiredMenu: ["HR_ADMIN"],
     },
 
     {
       path: "/HR/User",
       element: <PermissionGrantPage></PermissionGrantPage>,
       withAuthorization: true,
-      withAdminAuthorization: false,
+      withAdminAuthorization: true,
+      requiredMenu: ["HR_ADMIN"],
     },
     {
       path: "/DashboardAdmin/Dashboard",
       element: <AdminResultDashboardPage></AdminResultDashboardPage>,
       withAuthorization: true,
-      withAdminAuthorization: false,
+      withAdminAuthorization: true,
+      requiredMenu: ["EVAL_RESULT_ADMIN"],
     },
 
     {
@@ -94,7 +101,20 @@ const RouterMainPage = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {RouterInfo.map((route) => {
+        {RouterInfo.filter((route) => {
+          if (route.requiredMenu) {
+            if (Array.isArray(route.requiredMenu)) {
+              return route.requiredMenu.some((menu) =>
+                User_Info?.accessMenus?.includes(menu),
+              );
+            }
+
+            return User_Info?.accessMenus?.includes(route.requiredMenu);
+          }
+
+          // 2. 권한 제한이 없는 라우터는 무조건 렌더링 (true)
+          return true;
+        }).map((route) => {
           return (
             <Route
               key={route.path}
@@ -104,7 +124,7 @@ const RouterMainPage = () => {
                   withAdminAuthorization={route.withAdminAuthorization}
                   withAuthorization={route.withAuthorization}
                   component={route.element}
-                  authCode={route.authCode}
+                  authCode={route.requiredMenu}
                   User_Info={User_Info}
                 ></LoginRoute>
               }
