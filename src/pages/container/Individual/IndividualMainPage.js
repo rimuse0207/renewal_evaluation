@@ -9,29 +9,16 @@ const AutoResizeTextarea = ({ value, onChange, placeholder }) => {
   const textareaRef = useRef(null);
 
   useLayoutEffect(() => {
-    const el = textareaRef.current;
-    if (!el) return;
+    if (textareaRef.current) {
+      const scrollContainer =
+        textareaRef.current.closest("main") || document.documentElement;
 
-    const container = el.closest("main") || document.documentElement;
-    const prevScrollTop = container.scrollTop;
+      const currentScrollTop = scrollContainer.scrollTop;
 
-    const borderH = el.offsetHeight - el.clientHeight;
-    el.style.height = "auto";
-    el.style.height = `${el.scrollHeight + borderH}px`;
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
 
-    container.scrollTop = prevScrollTop;
-
-    if (document.activeElement === el) {
-      const lineHeight = parseFloat(getComputedStyle(el).lineHeight) || 24;
-      const bottomMargin = lineHeight * 3;
-
-      const containerBottom = container.getBoundingClientRect().bottom;
-      const textareaBottom = el.getBoundingClientRect().bottom;
-      const overflow = textareaBottom + bottomMargin - containerBottom;
-
-      if (overflow > 0) {
-        container.scrollTop += overflow;
-      }
+      scrollContainer.scrollTop = currentScrollTop;
     }
   }, [value]);
 
@@ -45,6 +32,7 @@ const AutoResizeTextarea = ({ value, onChange, placeholder }) => {
     />
   );
 };
+
 export default function PerformanceEditPage() {
   const {
     Navigation,
@@ -272,6 +260,7 @@ const MainContent = styled.main`
   flex: 1;
   overflow-y: auto;
   position: relative;
+  overflow-anchor: none;
   /* scroll-behavior: smooth;  ← 삭제 */
 `;
 const ContentWrapper = styled.div`
