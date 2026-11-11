@@ -1,15 +1,39 @@
 import React from "react";
-import { MOCK_CRITERIA } from "../../../../public/global/variable";
+import {
+  JOB_CRITERIA,
+  MOCK_CRITERIA,
+} from "../../../../public/global/variable";
 import styled from "styled-components";
 
 const Criteria = () => {
   return (
     <CriteriaCard>
+      <CriteriaTitle>업무 분류 기준 안내</CriteriaTitle>
+      <CriteriaList
+        style={{ gridTemplateColumns: "repeat(2, 1fr)", marginBottom: "40px" }}
+      >
+        {JOB_CRITERIA?.map((criteria, index) => (
+          <CriteriaItem key={index}>
+            <CriteriaLevel
+              style={{
+                padding: "0px 12px",
+                height: "25px",
+                lineHeight: "25px",
+                backgroundColor: `${criteria.color}`,
+              }}
+            >
+              {criteria.level}
+            </CriteriaLevel>
+            <CriteriaDesc>{criteria.desc}</CriteriaDesc>
+          </CriteriaItem>
+        ))}
+      </CriteriaList>
+
       <CriteriaTitle>평정 기준 안내</CriteriaTitle>
       <CriteriaList>
         {MOCK_CRITERIA?.map((criteria, index) => (
           <CriteriaItem key={index}>
-            <CriteriaLevel>{criteria.level}</CriteriaLevel>
+            <CriteriaLevel> {criteria.level}</CriteriaLevel>
             <CriteriaDesc>{criteria.desc}</CriteriaDesc>
           </CriteriaItem>
         ))}
