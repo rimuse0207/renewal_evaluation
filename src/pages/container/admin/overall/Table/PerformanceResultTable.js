@@ -29,10 +29,10 @@ export default function PerformanceResultTable({
         <tbody>
           {tasks.map((task, idx) => {
             const calc1 = task.eval1_score
-              ? ((task.eval1_score / 10) * task.weight).toFixed(4)
+              ? (task.eval1_score / 10) * task.weight
               : "-";
             const calc2 = task.eval2_score
-              ? ((task.eval2_score / 10) * task.weight).toFixed(4)
+              ? (task.eval2_score / 10) * task.weight
               : "-";
             return (
               <tr key={task.task_id}>
