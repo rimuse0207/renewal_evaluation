@@ -100,17 +100,17 @@ export const useOverallEval = (evalYear, userId) => {
     }
 
     return {
-      perf1: parseFloat(perf1.toFixed(1)),
-      perf2: parseFloat(perf2.toFixed(1)),
+      perf1: parseFloat(perf1.toFixed(4)),
+      perf2: parseFloat(perf2.toFixed(4)),
       abil1,
       abil2,
       att1,
       att2,
-      comp1: parseFloat(comp1.toFixed(1)),
-      comp2: parseFloat(comp2.toFixed(1)),
-      total1: parseFloat(total1.toFixed(1)),
-      total2: parseFloat(total2.toFixed(1)),
-      finalTotal: parseFloat(finalTotal.toFixed(1)),
+      comp1: parseFloat(comp1.toFixed(4)),
+      comp2: parseFloat(comp2.toFixed(4)),
+      total1: parseFloat(total1.toFixed(4)),
+      total2: parseFloat(total2.toFixed(4)),
+      finalTotal: parseFloat(finalTotal.toFixed(4)),
     };
   }, [performanceTasks, competencyAbility, competencyAttitude, isBoth]);
 

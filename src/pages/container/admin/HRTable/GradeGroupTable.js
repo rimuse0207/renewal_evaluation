@@ -75,13 +75,11 @@ export default function GradeGroupTable({
                   {user.total1 > 0 ? (
                     <ScoreBlock>
                       <div className="detail-scores">
-                        <span>실적 {Number(user.perf1)?.toFixed(1)}</span>
+                        <span>실적 {Number(user.perf1)}</span>
                         <span className="divider">|</span>
-                        <span>역량 {Number(user.comp1)?.toFixed(1)}</span>
+                        <span>역량 {Number(user.comp1)}</span>
                       </div>
-                      <div className="total-score">
-                        {user.total1.toFixed(1)}점
-                      </div>
+                      <div className="total-score">{user.total1}점</div>
                     </ScoreBlock>
                   ) : (
                     <span className="empty-text">미진행</span>
@@ -91,13 +89,11 @@ export default function GradeGroupTable({
                   {user.total2 > 0 ? (
                     <ScoreBlock>
                       <div className="detail-scores">
-                        <span>실적 {Number(user.perf2)?.toFixed(1)}</span>
+                        <span>실적 {Number(user.perf2)}</span>
                         <span className="divider">|</span>
-                        <span>역량 {Number(user.comp2)?.toFixed(1)}</span>
+                        <span>역량 {Number(user.comp2)}</span>
                       </div>
-                      <div className="total-score">
-                        {user.total2.toFixed(1)}점
-                      </div>
+                      <div className="total-score">{user.total2}점</div>
                     </ScoreBlock>
                   ) : (
                     <span className="empty-text">미진행</span>
@@ -105,9 +101,7 @@ export default function GradeGroupTable({
                 </Td>
                 <Td align="center">
                   <FinalScore $color={colorHex}>
-                    {user.finalTotal > 0
-                      ? `${user.finalTotal.toFixed(1)}점`
-                      : "-"}
+                    {user.finalTotal > 0 ? `${user.finalTotal}점` : "-"}
                   </FinalScore>
                 </Td>
                 <Td align="center">

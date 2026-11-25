@@ -79,6 +79,8 @@ export const useAdminMain = () => {
         });
 
         if (res.status) {
+          console.log(res.data);
+          console.log(processTargetData(res.data));
           setTargets(processTargetData(res.data));
         }
       } catch (error) {

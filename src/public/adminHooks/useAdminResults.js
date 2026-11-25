@@ -91,8 +91,6 @@ export const useAdminResult = () => {
       else if (total1 > 0 && total2 > 0) finalTotal = (total1 + total2) / 2;
       else finalTotal = total1 > 0 ? total1 : total2;
 
-      // 🌟 3. 최종 등급 판정 (수정된 부분)
-      // 기존 DB의 grade1, grade2를 무시하고 오직 finalTotal(환산점수) 기준으로 절대평가 등급을 강제 부여합니다.
       let finalGrade = null;
 
       if (finalTotal >= 90) {
